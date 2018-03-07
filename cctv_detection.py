@@ -206,23 +206,20 @@ for image_path in TEST_IMAGE_PATHS:
   img.save(image_path+'output.jpg')
 
 #Single Image
-image_path = "test_images/hydrant63_3.jpg";
+image_path = "test_images/traffic13_3.jpg";
 image = Image.open(image_path)
 image_np = load_image_into_numpy_array(image)
 image_np_expanded = np.expand_dims(image_np, axis=0)
 output_dict = run_inference_for_single_image(image_np, detection_graph)
-hydrant_dict = filter_class(output_dict,11)
 output = vis_util.visualize_boxes_and_labels_on_image_array(
   image_np,
-  hydrant_dict['detection_boxes'],
-  hydrant_dict['detection_classes'],
-  hydrant_dict['detection_scores'],
+  output_dict['detection_boxes'],
+  output_dict['detection_classes'],
+  output_dict['detection_scores'],
   category_index,
-  instance_masks=hydrant_dict.get('detection_masks'),
+  instance_masks=output_dict.get('detection_masks'),
   use_normalized_coordinates=True,
-  min_score_thresh=0.000000000000000000001,
-  line_thickness=8,
-  skip_scores=True)
+  line_thickness=8)
 img = Image.fromarray(output)
 img.save(image_path+'_detection.jpg')
 
