@@ -214,16 +214,16 @@ output_dict = run_inference_for_single_image(image_np, detection_graph)
 hydrant_dict = filter_class(output_dict,11)
 output = vis_util.visualize_boxes_and_labels_on_image_array(
   image_np,
-  output_dict['detection_boxes'],
-  output_dict['detection_classes'],
-  output_dict['detection_scores'],
+  hydrant_dict['detection_boxes'],
+  hydrant_dict['detection_classes'],
+  hydrant_dict['detection_scores'],
   category_index,
-  instance_masks=output_dict.get('detection_masks'),
+  instance_masks=hydrant_dict.get('detection_masks'),
   use_normalized_coordinates=True,
+  min_score_thresh=0.000000000000000000001,
   line_thickness=8,
-  min_score_thresh=.15,
   skip_scores=True)
 img = Image.fromarray(output)
-img.save(image_path+'output4.jpg')
+img.save(image_path+'_detection.jpg')
 
 
